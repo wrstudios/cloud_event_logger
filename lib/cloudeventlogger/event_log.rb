@@ -55,6 +55,10 @@ class EventLog
     end
   end
 
+  def event_name
+    options[:event_name] || nil
+  end
+
   def mls_code
     options[:mls_code] || nil
   end
