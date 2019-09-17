@@ -1,2 +1,0 @@
-# Logfile created on 2019-09-16 16:45:34 -0600 by logger.rb/56504
-{"@timestamp":"2019-09-16 22:45:34 UTC","message":"Event logged by CloudEventLogger","ecs":{"version":"1.0.0"},"event":{"id":"f8f86cbc-f6a4-4500-b2b7-106b0f965460","application":"CloudEventLogger","name":"sign up","created":"2019-09-16 22:45:34 UTC"},"client":null,"organization":{"id":null}}

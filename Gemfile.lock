@@ -1,6 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    byebug (3.5.1)
+      columnize (~> 0.8)
+      debugger-linecache (~> 1.2)
+      slop (~> 3.6)
+    coderay (1.1.1)
+    columnize (0.9.0)
+    debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
     hashie (3.6.0)
     httparty (0.13.7)
@@ -8,7 +15,15 @@ GEM
       multi_xml (>= 0.5.2)
     json (1.8.6)
     lumberjack (1.0.13)
+    method_source (0.8.2)
     multi_xml (0.5.5)
+    pry (0.10.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pry-byebug (2.0.0)
+      byebug (~> 3.4)
+      pry (~> 0.10)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -22,6 +37,8 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
+    slop (3.6.0)
+    timecop (0.9.1)
 
 PLATFORMS
   ruby
@@ -30,7 +47,9 @@ DEPENDENCIES
   hashie
   httparty
   lumberjack
+  pry-byebug
   rspec
+  timecop
 
 BUNDLED WITH
    1.17.3
