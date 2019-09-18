@@ -1,14 +1,12 @@
 class EventLog
-  attr_accessor :data, :object, :config, :key, :score, :original_address, :attempt, :options, :application_keys
+  attr_accessor :object, :config, :key, :options
 
   def initialize(config, key, options={})
     @config = config
     @key = key || SecureRandom.uuid
     @options = options
-
     @start_time = Time.now.utc
     @app_name = config[:app_name] || "CloudGeo"
-    @data = {}
   end
 
 
@@ -21,9 +19,9 @@ class EventLog
       client: client_object,
       organization: {
         id: mls_code
-      }
+      },
+      metadata: metadata
     }
-    
   end
 
   def event_object
@@ -33,10 +31,6 @@ class EventLog
       name: event_name,
       created: @start_time,
     }
-  end
-
-  def data=(value)
-    @data = value.kind_of?(Array) ? value.first : value
   end
 
   def client_object
@@ -50,9 +44,13 @@ class EventLog
           }
         }
       }
-    else
+    elsif
       nil
     end
+  end
+
+  def metadata
+    options[:metadata] || nil
   end
 
   def event_name
@@ -67,19 +65,12 @@ class EventLog
     options[:proximity] || nil
   end
 
-  def geo_point
-    if data[:lon] && data[:lat]
-      {
-        lon: data[:lon] || nil,
-        lat: data[:lat] || nil
-      }
-    else
-      nil
-    end
+  def country_name
+    options[:country] || nil
   end
 
-  def country_name
-    data[:address_components][:country] rescue nil
+  def city_name
+    options[:city] || nil
   end
 
 end
