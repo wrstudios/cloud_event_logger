@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "cloud_event_logger"
+require "timecop"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

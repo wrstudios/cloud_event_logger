@@ -1,39 +1,63 @@
-# CloudEventLogger
+# CloudEventLogger Gem
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/cloud_event_logger`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
-## Installation
-
-Add this line to your application's Gemfile:
+Configure the gem like this:
 
 ```ruby
-gem 'cloud_event_logger'
+CloudEventLogger.config do |c|
+  c.app_name = 'Cloud CMA'
+  c.log_file = 'spec/fixtures/test.log'
+end
 ```
 
-And then execute:
+We used this guide to create gem:
+http://guides.rubygems.org/make-your-own-gem/
 
-    $ bundle
+Make sure to build the gem each time you update or revise the version:
+```
+gem build cloud_event_logger.gemspec
+```
 
-Or install it yourself as:
+To run the gem using irb:
 
-    $ gem install cloud_event_logger
+```
+gem install ./cloud_event_logger-0.1.0.gem
+```
 
-## Usage
+```
+$ irb
+```
+Then:
+```ruby
+require_relative 'lib/cloud_event_logger'
+CloudEventLogger.config { |c| c.app_name = 'App name' ; c.log_file = 'my_log.log'}
+CloudEventLogger.log_event({:event_name => 'sign up'})
+```
 
-TODO: Write usage instructions here
+#### Arguments for CloudEventLogger instance:
+**CloudEventLogger.log_event() takes two arguments**.
 
-## Development
+1. Takes a single Argument: Options hash
+- `event_name:` name of event to track
+  example: `{:event_name => 'sign up'}`
+- `session_id:` the user session id
+  example: `'60880520-ac32-11e9-9e1a-67a9c9493b51'` 
+- `country:` country code
+  example: `'US'` or `'CA'`
+- `city:` country code
+  example: `'Huntington Beach'`
+- `proximity:` lon and lat of the epicenter as a string
+  example: `"-79.3716,43.6319"`
+- `metadata:` Meta data to be consumed and sent to log files
+  example: `metadata: {mlsnum: '123456'}`
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/cloud_event_logger.
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+Implemenataion example using mapbox_autocomplete:
+```ruby
+options = { event_name: 'Sign Up' 
+            session_id: session_id, 
+            country: 'US',
+            city: 'Huntington Beach' 
+            proximity: "-79.3716, 43.6319",
+            metadata: { mlscode: 'mred', mlsnum: '123456'}
+          }
+CloudEventLogger.log_event(options)
+```      

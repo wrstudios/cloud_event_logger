@@ -1,0 +1,2 @@
+# Logfile created on 2019-09-17 19:14:28 UTC by logger.rb/56504
+{"@timestamp":"2019-09-17 19:14:28 UTC","message":"Event logged by Cloud CMA","ecs":{"version":"1.0.0"},"event":{"id":"321","application":"Cloud CMA","name":"Sign Up","created":"2019-09-17 19:14:28 UTC"},"client":{"geo":{"location":{"lon":"-79.3716","lat":" 43.6319"}}},"organization":{"id":null},"metadata":{"foo":"bar","biz":"baz","mlsnum":"123456"}}
