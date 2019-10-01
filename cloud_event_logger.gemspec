@@ -1,10 +1,10 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require_relative "lib/cloudeventlogger/version"
+require_relative "lib/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "cloud_event_logger"
+  spec.name          = "cloud-event-logger"
   spec.version       = CloudEventLogger::VERSION
   spec.authors       = ["“aboehm”"]
   spec.email         = ["boehm.adam@gmail.com"]

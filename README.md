@@ -17,26 +17,24 @@ Make sure to build the gem each time you update or revise the version:
 gem build cloud_event_logger.gemspec
 ```
 
-To run the gem using irb:
+**To use the gem in console:**
 
 ```
-gem install ./cloud_event_logger-0.1.0.gem
-```
-
-```
-$ irb
+gem install cloud-event-logger
 ```
 Then:
 ```ruby
-require_relative 'lib/cloud_event_logger'
+bin/console
+```
+
+```
 CloudEventLogger.config { |c| c.app_name = 'App name' ; c.log_file = 'my_log.log'}
 CloudEventLogger.log_event({:event_name => 'sign up'})
 ```
 
-#### Arguments for CloudEventLogger instance:
-**CloudEventLogger.log_event() takes two arguments**.
+**CloudEventLogger.log_event() takes a single hash argument**.
 
-1. Takes a single Argument: Options hash
+1. Hash key->value options:
 - `event_name:` name of event to track
   example: `{:event_name => 'sign up'}`
 - `session_id:` the user session id
@@ -50,7 +48,7 @@ CloudEventLogger.log_event({:event_name => 'sign up'})
 - `metadata:` Meta data to be consumed and sent to log files
   example: `metadata: {mlsnum: '123456'}`
 
-Implemenataion example using mapbox_autocomplete:
+Implementation example using mapbox_autocomplete:
 ```ruby
 options = { event_name: 'Sign Up' 
             session_id: session_id, 

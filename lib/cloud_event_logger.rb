@@ -1,4 +1,4 @@
-require_relative "cloudeventlogger/version"
+require_relative "version"
 
 class CloudEventLogger
   class Error < StandardError; end
@@ -37,7 +37,7 @@ class CloudEventLogger
     end
 end
 
-require_relative 'cloudeventlogger/event_log'
+require_relative 'event_log'
 require 'securerandom'
 require 'hashie'
 require 'yaml'
