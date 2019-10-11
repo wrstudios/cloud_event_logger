@@ -6,7 +6,7 @@ class EventLog
     @key = key || SecureRandom.uuid
     @options = options
     @start_time = Time.now.utc
-    @app_name = config[:app_name] || "CloudGeo"
+    @app_name = config[:app_name] || "CloudEventLogger"
   end
 
 
