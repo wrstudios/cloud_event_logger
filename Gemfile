@@ -1,6 +1,8 @@
-source 'https://rubygems.org'
+ source 'https://rubygems.org'
 
 gem 'hashie'
+gem 'lumberjack'
+gem 'httparty'
 gem 'rspec'
 gem 'timecop'
 
