@@ -4,8 +4,8 @@ Configure the gem like this:
 
 ```ruby
 CloudEventLogger.config do |c|
-  c.app_name = 'Cloud CMA'
-  c.log_file = 'spec/fixtures/test.log'
+  c.app_name = 'Cloud Streams'
+  c.log_file = 'log/event_logger.log'
 end
 ```
 

@@ -1,5 +1,7 @@
 RSpec.describe CloudEventLogger do
 
+  let(:user_object) { instance_double(User) }
+
   before do
     allow(SecureRandom).to receive(:uuid).and_return('321')
   end
@@ -20,12 +22,10 @@ RSpec.describe CloudEventLogger do
     end
 
     @time_now = Time.parse("2019-09-17 19:14:28 UTC")
-
+    
     Timecop.freeze(@time_now) do
       options = { event_name: 'Sign Up', 
-            session_id: SecureRandom.uuid, 
-            country: 'US',
-            city: 'Huntington Beach',
+            session_id: SecureRandom.uuid,
             proximity: "-79.3716, 43.6319",
             metadata: { foo: 'bar', biz: 'baz', mlsnum: '123456'}
           }
