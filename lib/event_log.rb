@@ -54,7 +54,7 @@ class EventLog
     user = @user
     if !user.nil?
       mls_code = nil
-      if user.try(:client)
+      if user.try(:client?)
         if user.agents.any? && !user.agents.first.mls.nil?
           mls_code = user.agents.first.mls.key
         end
