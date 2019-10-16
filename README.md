@@ -28,34 +28,33 @@ bin/console
 ```
 
 ```
-CloudEventLogger.config { |c| c.app_name = 'App name' ; c.log_file = 'my_log.log'}
-CloudEventLogger.log_event({:event_name => 'sign up'})
+CloudEventLogger.config { |c| c.app_name = 'App name' ; c.log_file = 'log/event_logger.log'}
+CloudEventLogger.log_event({event_name: 'sign up'})
 ```
 
 **CloudEventLogger.log_event() takes a single hash argument**.
 
 1. Hash key->value options:
 - `event_name:` name of event to track
-  example: `{:event_name => 'sign up'}`
+  example: `{event_name: 'sign up'}`
+- `user:` user active record object
+  example: `{user: 'User.find(params[:id'])}`
 - `session_id:` the user session id
   example: `'60880520-ac32-11e9-9e1a-67a9c9493b51'` 
-- `country:` country code
-  example: `'US'` or `'CA'`
-- `city:` country code
-  example: `'Huntington Beach'`
-- `proximity:` lon and lat of the epicenter as a string
+- `proximity:` lon and lat as provided by IPstack if applicable
   example: `"-79.3716,43.6319"`
 - `metadata:` Meta data to be consumed and sent to log files
-  example: `metadata: {mlsnum: '123456'}`
+  example: `metadata: {foo: 'bar', biz: 'baz'}`
 
-Implementation example using mapbox_autocomplete:
+Implementation example:
 ```ruby
-options = { event_name: 'Sign Up' 
+options = { event_name: 'Sign Up',
+            user: user 
             session_id: session_id, 
-            country: 'US',
-            city: 'Huntington Beach' 
             proximity: "-79.3716, 43.6319",
-            metadata: { mlscode: 'mred', mlsnum: '123456'}
+            metadata: { stream_item: stream_item.to_json
+                        path: path 
+                      }
           }
 CloudEventLogger.log_event(options)
 ```      
