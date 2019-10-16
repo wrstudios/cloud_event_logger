@@ -28,11 +28,12 @@ class EventLog
     {
       id: key,
       application: @app_name,
-      name: event_name,
-      created: @start_time,
+      name: @options[:event_name],
+      created: @start_time
     }
   end
 
+  # IP info from Browser if using IPstack
   def client_object
     if proximity
       lon,lat = proximity.split(',')
@@ -79,15 +80,11 @@ class EventLog
   end
 
   def metadata
-    options[:metadata] || nil
-  end
-
-  def event_name
-    options[:event_name] || nil
+    @options[:metadata] || nil
   end
 
   def proximity
-    options[:proximity] || nil
+    @options[:proximity] || nil
   end
 
 end
