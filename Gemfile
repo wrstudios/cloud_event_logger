@@ -5,4 +5,5 @@ gem 'lumberjack'
 gem 'httparty'
 gem 'rspec'
 gem 'timecop'
+gem 'rspec-activemodel-mocks'
 

@@ -58,6 +58,10 @@ class EventLog
         if user.agents.any? && !user.agents.first.mls.nil?
           mls_code = user.agents.first.mls.key
         end
+      elsif user.try(:agent?)
+        if !user.mls.nil?
+          mls_code = user.mls.key
+        end
       else
         mls_code = user.mls_credential.code
       end
@@ -84,7 +88,7 @@ class EventLog
   end
 
   def proximity
-    @options[:proximity] || nil
+    @options[:metadata][:proximity] || nil
   end
 
 end
