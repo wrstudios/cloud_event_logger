@@ -6,20 +6,20 @@ class EventLog
     @key = key || SecureRandom.uuid
     @options = options
     @start_time = Time.now.utc
-    @app_name = config[:app_name] || "CloudGeo"
+    @app_name = config[:app_name] || "CloudEventLogger"
+    @user = options[:user] || nil
   end
 
 
   def object
     {
       "@timestamp" => @start_time,
-      message: "Event logged by #{config.app_name}",
+      message: "Event logged by #{@app_name}",
       ecs: { version: "1.0.0" },
       event: event_object,
       client: client_object,
-      organization: {
-        id: mls_code
-      },
+      user_object: user_object,
+      mls_code: mls_code,
       metadata: metadata
     }
   end
@@ -27,12 +27,13 @@ class EventLog
   def event_object
     {
       id: key,
-      application: config.app_name,
-      name: event_name,
-      created: @start_time,
+      application: @app_name,
+      name: @options[:event_name],
+      created: @start_time
     }
   end
 
+  # IP info from Browser if using IPstack
   def client_object
     if proximity
       lon,lat = proximity.split(',')
@@ -44,33 +45,50 @@ class EventLog
           }
         }
       }
-    elsif
+    else
       nil
     end
   end
 
-  def metadata
-    options[:metadata] || nil
-  end
-
-  def event_name
-    options[:event_name] || nil
-  end
-
   def mls_code
-    options[:mls_code] || nil
+    user = @user
+    if !user.nil?
+      mls_code = nil
+      if user.try(:client?)
+        if user.agents.any? && !user.agents.first.mls.nil?
+          mls_code = user.agents.first.mls.key
+        end
+      elsif user.try(:agent?)
+        if !user.mls.nil?
+          mls_code = user.mls.key
+        end
+      else
+        mls_code = user.mls_credential.code
+      end
+      mls_code
+    else
+      nil
+    end
+  end
+
+  def user_object
+    user = @user
+    if user && !user.nil?
+      {
+        user_id: user.id,
+        user_type: user.try(:type),
+        user: user.to_json,
+        user_eamil: user.email
+      }
+    end
+  end
+
+  def metadata
+    @options[:metadata] || nil
   end
 
   def proximity
-    options[:proximity] || nil
-  end
-
-  def country_name
-    options[:country] || nil
-  end
-
-  def city_name
-    options[:city] || nil
+    @options[:metadata][:proximity] || nil
   end
 
 end

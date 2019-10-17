@@ -1,33 +1,33 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    byebug (3.5.1)
-      columnize (~> 0.8)
-      debugger-linecache (~> 1.2)
-      slop (~> 3.6)
-    coderay (1.1.1)
-    columnize (0.9.0)
-    debugger-linecache (1.2.0)
+    activemodel (5.2.3)
+      activesupport (= 5.2.3)
+    activesupport (5.2.3)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 0.7, < 2)
+      minitest (~> 5.1)
+      tzinfo (~> 1.1)
+    concurrent-ruby (1.1.5)
     diff-lcs (1.2.5)
     hashie (3.6.0)
     httparty (0.13.7)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
+    i18n (1.5.1)
+      concurrent-ruby (~> 1.0)
     json (1.8.6)
     lumberjack (1.0.13)
-    method_source (0.8.2)
+    minitest (5.12.2)
     multi_xml (0.5.5)
-    pry (0.10.3)
-      coderay (~> 1.1.0)
-      method_source (~> 0.8.1)
-      slop (~> 3.4)
-    pry-byebug (2.0.0)
-      byebug (~> 3.4)
-      pry (~> 0.10)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
       rspec-mocks (~> 3.4.0)
+    rspec-activemodel-mocks (1.1.0)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      rspec-mocks (>= 2.99, < 4.0)
     rspec-core (3.4.4)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
@@ -37,8 +37,10 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
-    slop (3.6.0)
+    thread_safe (0.3.6)
     timecop (0.9.1)
+    tzinfo (1.2.5)
+      thread_safe (~> 0.1)
 
 PLATFORMS
   ruby
@@ -47,8 +49,8 @@ DEPENDENCIES
   hashie
   httparty
   lumberjack
-  pry-byebug
   rspec
+  rspec-activemodel-mocks
   timecop
 
 BUNDLED WITH

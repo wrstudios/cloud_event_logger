@@ -4,8 +4,8 @@ Configure the gem like this:
 
 ```ruby
 CloudEventLogger.config do |c|
-  c.app_name = 'Cloud CMA'
-  c.log_file = 'spec/fixtures/test.log'
+  c.app_name = 'Cloud Streams'
+  c.log_file = 'log/event_logger.log'
 end
 ```
 
@@ -28,34 +28,24 @@ bin/console
 ```
 
 ```
-CloudEventLogger.config { |c| c.app_name = 'App name' ; c.log_file = 'my_log.log'}
-CloudEventLogger.log_event({:event_name => 'sign up'})
+CloudEventLogger.config { |c| c.app_name = 'App name' ; c.log_file = 'log/event_logger.log'}
+CloudEventLogger.log_event(user, 'Sign Up', {foo: bar, track: this})
 ```
 
-**CloudEventLogger.log_event() takes a single hash argument**.
+**CloudEventLogger.log_event() takes three arguments**.
+1. `user:` user active record object
+2. `event_name:` named event to track
+3. `metadata:` 
+a.`proximity:` lon and lat as provided by IPstack if applicable and always nested inside metadata
+b.`key: value` Any additional data to be tracked thats related to the user object
 
-1. Hash key->value options:
-- `event_name:` name of event to track
-  example: `{:event_name => 'sign up'}`
-- `session_id:` the user session id
-  example: `'60880520-ac32-11e9-9e1a-67a9c9493b51'` 
-- `country:` country code
-  example: `'US'` or `'CA'`
-- `city:` country code
-  example: `'Huntington Beach'`
-- `proximity:` lon and lat of the epicenter as a string
-  example: `"-79.3716,43.6319"`
-- `metadata:` Meta data to be consumed and sent to log files
-  example: `metadata: {mlsnum: '123456'}`
-
-Implementation example using mapbox_autocomplete:
+Implementation example:
 ```ruby
-options = { event_name: 'Sign Up' 
-            session_id: session_id, 
-            country: 'US',
-            city: 'Huntington Beach' 
-            proximity: "-79.3716, 43.6319",
-            metadata: { mlscode: 'mred', mlsnum: '123456'}
+metadata: { stream_item: stream_item.to_json
+            path: path
+            proximity: "-79.3716, 43.6319" 
           }
-CloudEventLogger.log_event(options)
+user = User.find(parms[:id])
+event_name = 'Sign Up'
+CloudEventLogger.log_event(user, event_name, metadata)
 ```      
