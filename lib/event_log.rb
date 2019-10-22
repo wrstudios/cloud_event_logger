@@ -78,7 +78,7 @@ class EventLog
         user_id: user.id,
         user_type: user.try(:type),
         user: user.to_json,
-        user_eamil: user.email
+        user_email: user.email
       }
     end
   end
