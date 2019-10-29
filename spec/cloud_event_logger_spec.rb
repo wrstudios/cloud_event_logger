@@ -2,15 +2,17 @@ RSpec.describe CloudEventLogger do
   require 'rspec/active_model/mocks'
   
   # Mock incoming user object from external apps
-  let(:user) {  mock_model("User", id: 789, type: nil, email: 'test@gmail.com') }
+  let(:user) {  mock_model("User", id: 789, type: nil, email: 'test@gmail.com', account: account) }
+  let(:account) { mock_model("Account", id: 987, name: "CRMLS")}
   let(:mls_credential) {  mock_model("MlsCredintial", id: 564, code: 'crmls') }
 
   before do
     allow(SecureRandom).to receive(:uuid).and_return('321')
     allow(user).to receive(:try).and_return(false)
     allow(user).to receive(:mls_credential).and_return(mls_credential)
-    # stub to_json call due to UUID on mock user object
+    # stub to_json call due to UUID on mock user and account object
     allow(user).to receive(:to_json).and_return('json')
+    allow(account).to receive(:to_json).and_return('json')
   end
 
   it "has a version number" do

@@ -1,5 +1,5 @@
 class EventLog
-  attr_accessor :object, :config, :key, :options
+  attr_accessor :object, :config, :key, :options, :user
 
   def initialize(config, key, options={})
     @config = config
@@ -19,6 +19,7 @@ class EventLog
       event: event_object,
       client: client_object,
       user_object: user_object,
+      account_object: account_object,
       mls_code: mls_code,
       metadata: metadata
     }
@@ -28,7 +29,7 @@ class EventLog
     {
       id: key,
       application: @app_name,
-      name: @options[:event_name],
+      name: options[:event_name],
       created: @start_time
     }
   end
@@ -51,28 +52,40 @@ class EventLog
   end
 
   def mls_code
-    user = @user
     if !user.nil?
-      mls_code = nil
       if user.try(:client?)
-        if user.agents.any? && !user.agents.first.mls.nil?
-          mls_code = user.agents.first.mls.key
-        end
+        mls_code = client_mls
       elsif user.try(:agent?)
-        if !user.mls.nil?
-          mls_code = user.mls.key
-        end
+        mls_code = agent_mls
       else
-        mls_code = user.mls_credential.code
+        mls_code = user_mls
       end
-      mls_code
+    else
+      nil
+    end
+  end
+
+  def client_mls
+    if user.agents.any? && !user.agents.first.mls.nil?
+      user.agents.first.mls.key
+    end
+  end
+
+  def agent_mls
+    if !user.mls.nil?
+      user.mls.key
+    end
+  end
+
+  def user_mls
+    if !user.mls_credential.nil?
+      user.mls_credential.code
     else
       nil
     end
   end
 
   def user_object
-    user = @user
     if user && !user.nil?
       {
         user_id: user.id,
@@ -83,12 +96,39 @@ class EventLog
     end
   end
 
+  def account_object
+    if user && !user.nil?
+      {
+        name: account_name,
+        account: account_data
+      }
+    else
+      nil
+    end
+  end
+
+  def account_data
+    if user.account && !user.account.nil?
+      user.account.to_json
+    else
+      nil
+    end
+  end
+
+  def account_name
+    if user.account && !user.account.nil?
+      user.account.name
+    else
+      nil
+    end
+  end
+
   def metadata
-    @options[:metadata] || nil
+    options[:metadata] || nil
   end
 
   def proximity
-    @options[:metadata][:proximity] || nil
+    options[:metadata][:proximity] || nil
   end
 
 end
