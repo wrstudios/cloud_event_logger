@@ -68,12 +68,16 @@ class EventLog
   def client_mls
     if user.agents.any? && !user.agents.first.mls.nil?
       user.agents.first.mls.key
+    else
+      nil
     end
   end
 
   def agent_mls
     if !user.mls.nil?
       user.mls.key
+    else
+      nil
     end
   end
 
@@ -90,26 +94,9 @@ class EventLog
       {
         user_id: user.id,
         user_type: user.try(:type),
-        user: user.to_json,
-        user_eamil: user.email
+        user_eamil: user.email,
+        account_name: account_name
       }
-    end
-  end
-
-  def account_object
-    if user && !user.nil?
-      {
-        name: account_name,
-        account: account_data
-      }
-    else
-      nil
-    end
-  end
-
-  def account_data
-    if user.account && !user.account.nil?
-      user.account.to_json
     else
       nil
     end
