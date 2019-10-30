@@ -102,8 +102,8 @@ class EventLog
   end
 
   def account_name
-    if user.account && !user.account.nil?
-      user.account.name
+    if user.try(:account) && !user.account.nil?
+      user.account.try(:name)
     else
       nil
     end
