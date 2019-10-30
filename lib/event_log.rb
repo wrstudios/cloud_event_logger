@@ -19,7 +19,6 @@ class EventLog
       event: event_object,
       client: client_object,
       user_object: user_object,
-      account_object: account_object,
       mls_code: mls_code,
       metadata: metadata
     }
