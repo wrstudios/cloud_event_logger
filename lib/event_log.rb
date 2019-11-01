@@ -93,7 +93,7 @@ class EventLog
       {
         user_id: user.id,
         user_type: user.try(:type),
-        user_eamil: user.email,
+        user_email: user.email,
         account_name: account_name
       }
     else
