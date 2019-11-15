@@ -11,15 +11,9 @@ GEM
     concurrent-ruby (1.1.5)
     diff-lcs (1.2.5)
     hashie (3.6.0)
-    httparty (0.13.7)
-      json (~> 1.8)
-      multi_xml (>= 0.5.2)
     i18n (1.5.1)
       concurrent-ruby (~> 1.0)
-    json (1.8.6)
-    lumberjack (1.0.13)
     minitest (5.12.2)
-    multi_xml (0.5.5)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -47,8 +41,6 @@ PLATFORMS
 
 DEPENDENCIES
   hashie
-  httparty
-  lumberjack
   rspec
   rspec-activemodel-mocks
   timecop

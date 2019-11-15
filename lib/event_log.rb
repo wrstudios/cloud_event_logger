@@ -1,5 +1,5 @@
 class EventLog
-  attr_accessor :object, :config, :key, :options, :user
+  attr_accessor :object, :config, :key, :options, :user, :mls
 
   def initialize(config, key, options={})
     @config = config
@@ -8,6 +8,7 @@ class EventLog
     @start_time = Time.now.utc
     @app_name = config[:app_name] || "CloudEventLogger"
     @user = options[:user] || nil
+    @mls = options[:mls] || nil
   end
 
 
@@ -15,11 +16,11 @@ class EventLog
     {
       "@timestamp" => @start_time,
       message: "Event logged by #{@app_name}",
-      ecs: { version: "1.0.0" },
+      ecs: { version: CloudEventLogger::VERSION },
       event: event_object,
       client: client_object,
-      user_object: user_object,
-      mls_code: mls_code,
+      user: user_object,
+      mls: mls_object,
       metadata: metadata
     }
   end
@@ -50,44 +51,6 @@ class EventLog
     end
   end
 
-  def mls_code
-    if !user.nil?
-      if user.try(:client?)
-        mls_code = client_mls
-      elsif user.try(:agent?)
-        mls_code = agent_mls
-      else
-        mls_code = user_mls
-      end
-    else
-      nil
-    end
-  end
-
-  def client_mls
-    if user.agents.any? && !user.agents.first.mls.nil?
-      user.agents.first.mls.key
-    else
-      nil
-    end
-  end
-
-  def agent_mls
-    if !user.mls.nil?
-      user.mls.key
-    else
-      nil
-    end
-  end
-
-  def user_mls
-    if !user.mls_credential.nil?
-      user.mls_credential.code
-    else
-      nil
-    end
-  end
-
   def user_object
     if user && !user.nil?
       {
@@ -101,9 +64,75 @@ class EventLog
     end
   end
 
+  def mls_object
+    if user && !user.nil?
+      mls_data
+    elsif mls && !mls.nil?
+      {
+        mls_code: mls.code,
+        mls_name: mls.name
+      }
+      
+    else
+      nil
+    end
+  end
+
+  def mls_data
+    if !user.nil?
+      if user.try(:client?)
+        client_mls
+      elsif user.try(:agent?)
+        agent_mls
+      else
+        user_mls
+      end
+    else
+      nil
+    end
+  end
+
+  def client_mls
+    if user.agents.any? && !user.agents.first.mls.nil?
+      {
+        mls_code: user.agents.first.mls.key,
+        mls_name: user.agents.first.mls.name
+      }
+    else
+      nil
+    end
+  end
+
+  def agent_mls
+    if !user.mls.nil?
+      {
+        mls_code: user.mls.key,
+        mls_name: user.mls.name
+      }
+    else
+      nil
+    end
+  end
+
+  def user_mls
+    if !user.mls_credential.nil?
+      {
+        mls_code: user.mls_credential.code,
+        mls_name: user.mls_credential.name
+      }
+    else
+      nil
+    end
+  end
+
   def account_name
-    if user.try(:account) && !user.account.nil?
-      user.account.try(:name)
+    if user.try(:client?)
+      agent = user.agents.first
+    else
+      agent = user
+    end
+    if agent.try(:account) && !agent.account.nil?
+      agent.account.try(:name)
     else
       nil
     end
