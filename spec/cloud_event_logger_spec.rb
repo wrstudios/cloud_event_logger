@@ -6,7 +6,7 @@ RSpec.describe CloudEventLogger do
   let(:agent) {  mock_model("User", type: 'Agent', id: 254, type: nil, email: 'test_1@gmail.com', account: account) }
   let(:client) {  mock_model("User",type: 'Client', id: 963, type: nil, email: 'test_2@gmail.com', account: account) }
   let(:account) { mock_model("Account", id: 987, name: "Test Broker Account")}
-  let(:mls_credential) {  mock_model("MlsCredintial", id: 564, code: 'crmls', name: 'California Realtors') }
+  let(:mls_credential) {  mock_model("MlsCredential", id: 564, code: 'crmls', name: 'California Realtors') }
   let(:mls) {  mock_model("Mls", id: 777, key: 'crmls', name: 'California') }
 
   context "when user type is Agent" do
@@ -40,7 +40,7 @@ RSpec.describe CloudEventLogger do
                     mlsnum: '123456', 
                     proximity: "-79.3716, 43.6319"
                   }
-        expect(CloudEventLogger.log_event(agent, nil, 'Sign Up', metadata)).to eq(true)
+        expect(CloudEventLogger.log_event(agent, 'Sign Up', metadata)).to eq(true)
         file1 = IO.read("spec/fixtures/test_agent.log")
         file2 = IO.read("spec/fixtures/event_logger_agent.log")
         expect(file1).to eq file2
@@ -82,7 +82,7 @@ RSpec.describe CloudEventLogger do
                     mlsnum: '123456', 
                     proximity: "-79.3716, 43.6319"
                   }
-        expect(CloudEventLogger.log_event(client, nil, 'Sign Up', metadata)).to eq(true)
+        expect(CloudEventLogger.log_event(client, 'Sign Up', metadata)).to eq(true)
         file1 = IO.read("spec/fixtures/test_client.log")
         file2 = IO.read("spec/fixtures/event_logger_client.log")
         expect(file1).to eq file2
@@ -122,7 +122,7 @@ RSpec.describe CloudEventLogger do
                     mlsnum: '123456', 
                     proximity: "-79.3716, 43.6319"
                   }
-        expect(CloudEventLogger.log_event(user, mls, 'Sign Up', metadata)).to eq(true)
+        expect(CloudEventLogger.log_event(user,'Sign Up', metadata)).to eq(true)
         file1 = IO.read("spec/fixtures/test_user.log")
         file2 = IO.read("spec/fixtures/event_logger_user.log")
         expect(file1).to eq file2

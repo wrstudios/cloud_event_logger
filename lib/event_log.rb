@@ -1,5 +1,5 @@
 class EventLog
-  attr_accessor :object, :config, :key, :options, :user, :mls
+  attr_accessor :object, :config, :key, :options, :user
 
   def initialize(config, key, options={})
     @config = config
@@ -16,7 +16,7 @@ class EventLog
     {
       "@timestamp" => @start_time,
       message: "Event logged by #{@app_name}",
-      ecs: { version: CloudEventLogger::VERSION },
+      ecs: { version: "1.0.0" },
       event: event_object,
       client: client_object,
       user: user_object,
@@ -67,12 +67,6 @@ class EventLog
   def mls_object
     if user && !user.nil?
       mls_data
-    elsif mls && !mls.nil?
-      {
-        mls_code: mls.code,
-        mls_name: mls.name
-      }
-      
     else
       nil
     end
@@ -95,8 +89,8 @@ class EventLog
   def client_mls
     if user.agents.any? && !user.agents.first.mls.nil?
       {
-        mls_code: user.agents.first.mls.key,
-        mls_name: user.agents.first.mls.name
+        mls_code: user.agents.first.mls_credential.code,
+        mls_name: user.agents.first.mls_credential.name
       }
     else
       nil
@@ -106,8 +100,8 @@ class EventLog
   def agent_mls
     if !user.mls.nil?
       {
-        mls_code: user.mls.key,
-        mls_name: user.mls.name
+        mls_code: user.mls_credential.code,
+        mls_name: user.mls_credential.name
       }
     else
       nil
