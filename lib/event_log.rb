@@ -125,8 +125,9 @@ class EventLog
     else
       agent = user
     end
+
     if agent.try(:account) && !agent.account.nil?
-      agent.account.try(:name)
+      agent.account.try(:name).try(:upcase)
     else
       nil
     end
