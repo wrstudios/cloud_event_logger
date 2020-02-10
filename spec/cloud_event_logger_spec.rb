@@ -21,6 +21,7 @@ RSpec.describe CloudEventLogger do
       allow(agent).to receive(:mls_credential).and_return(mls_credential)
 
       allow(account).to receive(:try).with(:name).and_return(account.name)
+      allow(account.name).to receive(:try).with(:upcase).and_return(account.name.upcase)
       
 
       if File.file?("spec/fixtures/test_agent.log")
@@ -64,6 +65,7 @@ RSpec.describe CloudEventLogger do
       allow(agent).to receive(:mls).and_return(mls)
       
       allow(account).to receive(:try).with(:name).and_return(account.name)
+      allow(account.name).to receive(:try).with(:upcase).and_return(account.name.upcase)
       
       if File.file?("spec/fixtures/test_client.log")
         File.delete("spec/fixtures/test_client.log") 
@@ -103,6 +105,7 @@ RSpec.describe CloudEventLogger do
       allow(user).to receive(:mls_credential).and_return(mls_credential)
 
       allow(account).to receive(:try).with(:name).and_return(account.name)
+      allow(account.name).to receive(:try).with(:upcase).and_return(account.name.upcase)
       
 
       if File.file?("spec/fixtures/test_user.log")

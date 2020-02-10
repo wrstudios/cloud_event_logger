@@ -20,12 +20,11 @@ class CloudEventLogger
   end
 
   def self.log_event(user, event_name, metadata = {})
-    key = SecureRandom.uuid
-    options = { user: user,
-                event_name: event_name,
-                metadata: metadata
+    options = {
+                metadata: metadata,
+                app_name: config[:app_name]
               }
-    log = EventLog.new(config, key, options)
+    log = EventLog.new(user, event_name, options)
     self.write_event_log(log)
   end
 
