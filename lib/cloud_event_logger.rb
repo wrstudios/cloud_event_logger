@@ -24,7 +24,7 @@ class CloudEventLogger
                 metadata: metadata,
                 app_name: config[:app_name]
               }
-    log = CloudEventLog.new(user, event_name, options)
+    log = EventLog.new(user, event_name, options)
     self.write_event_log(log)
   end
 
@@ -40,7 +40,7 @@ class CloudEventLogger
     end
 end
 
-require_relative 'cloud_event_log'
+require_relative 'event_log'
 require 'securerandom'
 require 'hashie'
 require 'yaml'

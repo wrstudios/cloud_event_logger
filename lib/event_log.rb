@@ -1,4 +1,4 @@
-class CloudEventLog
+class EventLog
   attr_accessor :object, :options, :user, :event_name
 
   def initialize(user, event_name, options={})
