@@ -24,7 +24,9 @@ class CloudEventLog
     {
       application: @app_name,
       name: @event_name,
-      created: @start_time
+      created: @start_time,
+      day_of_week: @start_time.strftime("%A"),
+      day_of_week_i: Date.today.cwday
     }
   end
 
