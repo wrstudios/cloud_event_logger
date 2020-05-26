@@ -39,7 +39,8 @@ RSpec.describe CloudEventLogger do
         metadata ={ foo: 'bar', 
                     biz: 'baz', 
                     mlsnum: '123456', 
-                    proximity: "-79.3716, 43.6319"
+                    lat:"-79.3716", 
+                    lon:"43.6319"
                   }
         expect(CloudEventLogger.log_event(agent, 'Sign Up', metadata)).to eq(true)
         file1 = IO.read("spec/fixtures/test_agent.log")
@@ -81,8 +82,7 @@ RSpec.describe CloudEventLogger do
       Timecop.freeze(@time_now) do
         metadata ={ foo: 'bar', 
                     biz: 'baz', 
-                    mlsnum: '123456', 
-                    proximity: "-79.3716, 43.6319"
+                    mlsnum: '123456'
                   }
         expect(CloudEventLogger.log_event(client, 'Sign Up', metadata)).to eq(true)
         file1 = IO.read("spec/fixtures/test_client.log")
@@ -122,8 +122,7 @@ RSpec.describe CloudEventLogger do
       Timecop.freeze(@time_now) do
         metadata ={ foo: 'bar', 
                     biz: 'baz', 
-                    mlsnum: '123456', 
-                    proximity: "-79.3716, 43.6319"
+                    mlsnum: '123456'
                   }
         expect(CloudEventLogger.log_event(user,'Sign Up', metadata)).to eq(true)
         file1 = IO.read("spec/fixtures/test_user.log")

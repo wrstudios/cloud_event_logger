@@ -16,6 +16,7 @@ class CloudEventLog
       ecs: { version: "1.0.0" },
       event: event_object,
       user: user_object,
+      geo: geo_object,
       metadata: metadata
     }
   end
@@ -38,6 +39,27 @@ class CloudEventLog
         user_email: user.email,
         account_name: account_name,
         mls_credential: mls_credential
+      }
+    else
+      nil
+    end
+  end
+
+  # used for mapping data via ECS
+  def geo_object
+    {
+      location: geo_point,
+      # country_name: country_name,
+      # address: data[:address]
+    }
+  end
+
+  def geo_point
+    binding.pry
+    if metadata[:lon] && metadata[:lat]
+      {
+        lon: metadata[:lon] || nil,
+        lat: metadata[:lat] || nil
       }
     else
       nil
