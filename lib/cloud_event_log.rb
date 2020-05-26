@@ -16,7 +16,7 @@ class CloudEventLog
       ecs: { version: "1.0.0" },
       event: event_object,
       user: user_object,
-      geo: geo_object,
+      source:{ geo: geo_object },
       metadata: metadata
     }
   end
@@ -55,7 +55,6 @@ class CloudEventLog
   end
 
   def geo_point
-    binding.pry
     if metadata[:lon] && metadata[:lat]
       {
         lon: metadata[:lon] || nil,
