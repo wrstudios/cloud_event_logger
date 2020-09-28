@@ -9,6 +9,36 @@ RSpec.describe CloudEventLogger do
   let(:mls_credential) {  mock_model("MlsCredential", id: 564, code: 'crmls', name: 'California Realtors') }
   let(:mls) {  mock_model("Mls", id: 777, key: 'crmls', name: 'California') }
 
+  context "when logging external event" do
+    it "records event info" do
+      allow(SecureRandom).to receive(:uuid).and_return('321')
+      
+      if File.file?("spec/fixtures/test_no_user.log")
+        File.delete("spec/fixtures/test_no_user.log") 
+      end
+
+      CloudEventLogger.config do |c|
+        c.app_name = 'Cloud CMA'
+        c.log_file = 'spec/fixtures/test_no_user.log'
+      end
+
+      @time_now = Time.parse("2019-09-17 19:14:28 UTC")
+      
+      Timecop.freeze(@time_now) do
+        metadata ={ foo: 'bar', 
+                    biz: 'baz', 
+                    mlsnum: '123456', 
+                    proximity: "-79.3716, 43.6319"
+                  }
+        expect(CloudEventLogger.log_external_event('View Search', metadata)).to eq(true)
+        file1 = IO.read("spec/fixtures/test_no_user.log")
+        file2 = IO.read("spec/fixtures/event_logger_no_user.log")
+        expect(file1).to eq file2
+      end
+      File.delete("spec/fixtures/test_no_user.log")
+    end
+  end
+
   context "when user type is Agent" do
     it "records event info" do
       allow(SecureRandom).to receive(:uuid).and_return('321')

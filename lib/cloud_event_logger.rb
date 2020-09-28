@@ -28,6 +28,15 @@ class CloudEventLogger
     self.write_event_log(log)
   end
 
+  def self.log_external_event(event_name, metadata = {})
+    options = {
+                metadata: metadata,
+                app_name: config[:app_name]
+              }
+    log = CloudEventLog.new(nil, event_name, options)
+    self.write_event_log(log)
+  end
+
   private
 
     def self.write_event_log(log)
