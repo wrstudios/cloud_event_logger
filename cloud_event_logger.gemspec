@@ -6,8 +6,8 @@ require_relative "lib/version"
 Gem::Specification.new do |spec|
   spec.name          = "cloud-event-logger"
   spec.version       = CloudEventLogger::VERSION
-  spec.authors       = ["“aboehm”"]
-  spec.email         = ["boehm.adam@gmail.com"]
+  spec.authors       = ["“aboehm”", "jondruse"]
+  spec.email         = ["boehm.adam@gmail.com", "jodruse@lwolf.com"]
   spec.summary       = %q{initiating repo, will add asap Write a short summary, because RubyGems requires one.}
   spec.description   = %q{initiating repo, will add asap Write a longer description or delete this line.}
   spec.homepage      = 'http://github.com/wrstudios/cloud_event_logger'

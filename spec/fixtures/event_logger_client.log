@@ -1,2 +1,2 @@
-# Logfile created on 2019-09-17 19:14:28 UTC by logger.rb/54362
+# Logfile created on 2019-09-17 19:14:28 UTC by logger.rb/v1.4.2
 {"@timestamp":"2019-09-17 19:14:28 UTC","message":"Event logged by Cloud CMA","ecs":{"version":"1.0.0"},"event":{"application":"Cloud CMA","name":"Sign Up","created":"2019-09-17 19:14:28 UTC","day_of_week":"Tuesday","day_of_week_i":2},"user":{"user_id":963,"user_type":"Client","user_email":"test_2@gmail.com","account_name":"TEST BROKER ACCOUNT","mls_credential":{"code":"crmls","name":"California Realtors"}},"metadata":{"foo":"bar","biz":"baz","mlsnum":"123456","proximity":"-79.3716, 43.6319"}}

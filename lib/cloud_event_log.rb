@@ -9,6 +9,10 @@ class CloudEventLog
     @start_time = Time.now.utc
   end
 
+  def as_json
+    object.to_json
+  end
+
   def object
     {
       "@timestamp" => @start_time,
